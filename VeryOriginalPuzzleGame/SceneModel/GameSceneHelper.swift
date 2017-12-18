@@ -37,10 +37,17 @@ extension GameSceneHelper {
         get { return self.size.height / 2 }
     }
     var xOffset: CGFloat {
-        get { return -(self.size.width - (self.itemSize * CGFloat(self.itemsPerColumn))) }
+        get {
+            let totalItemSize = self.itemSize * CGFloat(self.itemsPerColumn)
+            return ((self.size.width - totalItemSize) / 2) - (self.halfWidth - self.itemSize / 2)
+        }
+//        get { return -self.size.width + ((self.itemSize * CGFloat(self.itemsPerColumn)) / 2) }
     }
     var yOffset: CGFloat {
-        get { return -(self.size.height - (self.itemSize * CGFloat(self.itemsPerRow))) / 2 }
+        get {
+            let totalItemSize = self.itemSize * CGFloat(self.itemsPerRow)
+            return ((self.size.height - totalItemSize) / 2) - (self.halfHeight - self.itemSize / 2)
+        }
     }
     
 }

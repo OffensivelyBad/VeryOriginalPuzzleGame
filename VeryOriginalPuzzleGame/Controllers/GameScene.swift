@@ -20,6 +20,15 @@ class GameScene: SKScene, GameSceneHelper {
         
         setupInitialScene()
         createItemsForGrid()
+        
+        print(self.xOffset)
+        print(self.yOffset)
+        print(self.itemSize)
+        print(self.halfWidth)
+        print(self.halfHeight)
+        
+        
+        
     }
     
     override func sceneDidLoad() {
