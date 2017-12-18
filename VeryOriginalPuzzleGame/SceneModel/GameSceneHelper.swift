@@ -10,16 +10,37 @@ import UIKit
 import SpriteKit
 
 protocol GameSceneHelper where Self: SKScene {
-    func halfWidth() -> CGFloat
-    func halfHeight() -> CGFloat
+    var itemsPerRow: Int { get }
+    var itemsPerColumn: Int { get }
+    var itemSize: CGFloat { get }
+    var halfWidth: CGFloat { get }
+    var halfHeight: CGFloat { get }
+    var xOffset: CGFloat { get }
+    var yOffset: CGFloat { get }
+    var columns: [[Item]] { get set }
 }
 
 extension GameSceneHelper {
-    func halfWidth() -> CGFloat {
-        return self.size.width / 2
+    var itemsPerRow: Int {
+        get { return 12 }
+    }
+    var itemsPerColumn: Int {
+        get { return 18 }
+    }
+    var itemSize: CGFloat {
+        get { return min(self.size.width / CGFloat(self.itemsPerColumn), self.size.height / CGFloat(self.itemsPerRow)) }
+    }
+    var halfWidth: CGFloat {
+        get { return self.size.width / 2 }
+    }
+    var halfHeight: CGFloat {
+        get { return self.size.height / 2 }
+    }
+    var xOffset: CGFloat {
+        get { return -(self.size.width - (self.itemSize * CGFloat(self.itemsPerColumn))) }
+    }
+    var yOffset: CGFloat {
+        get { return -(self.size.height - (self.itemSize * CGFloat(self.itemsPerRow))) / 2 }
     }
     
-    func halfHeight() -> CGFloat {
-        return self.size.height / 2
-    }
 }
