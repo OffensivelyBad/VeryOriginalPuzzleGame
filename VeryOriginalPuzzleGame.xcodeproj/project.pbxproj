@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		713C33CE1FE7615A00BAD305 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713C33CD1FE7615A00BAD305 /* Item.swift */; };
 		71AFFB331FE58DF200BE773C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AFFB321FE58DF200BE773C /* AppDelegate.swift */; };
 		71AFFB351FE58DF200BE773C /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 71AFFB341FE58DF200BE773C /* GameScene.sks */; };
 		71AFFB371FE58DF200BE773C /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 71AFFB361FE58DF200BE773C /* Actions.sks */; };
@@ -15,9 +16,16 @@
 		71AFFB3E1FE58DF200BE773C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71AFFB3C1FE58DF200BE773C /* Main.storyboard */; };
 		71AFFB401FE58DF200BE773C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71AFFB3F1FE58DF200BE773C /* Assets.xcassets */; };
 		71AFFB431FE58DF200BE773C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71AFFB411FE58DF200BE773C /* LaunchScreen.storyboard */; };
+		71AFFB4D1FE5900C00BE773C /* alien-restaurant.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 71AFFB4B1FE5900C00BE773C /* alien-restaurant.mp3 */; };
+		71AFFB4E1FE5900C00BE773C /* zap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 71AFFB4C1FE5900C00BE773C /* zap.wav */; };
+		71AFFB541FE59DFE00BE773C /* GameSceneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AFFB531FE59DFE00BE773C /* GameSceneModel.swift */; };
+		71AFFB561FE59E2A00BE773C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AFFB551FE59E2A00BE773C /* Constants.swift */; };
+		71AFFB581FE59F3900BE773C /* GameSceneSceneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AFFB571FE59F3900BE773C /* GameSceneSceneModel.swift */; };
+		71AFFB5A1FE6E9C000BE773C /* GameSceneHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AFFB591FE6E9C000BE773C /* GameSceneHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		713C33CD1FE7615A00BAD305 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		71AFFB2F1FE58DF200BE773C /* VeryOriginalPuzzleGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VeryOriginalPuzzleGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71AFFB321FE58DF200BE773C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		71AFFB341FE58DF200BE773C /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -28,6 +36,12 @@
 		71AFFB3F1FE58DF200BE773C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		71AFFB421FE58DF200BE773C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		71AFFB441FE58DF200BE773C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		71AFFB4B1FE5900C00BE773C /* alien-restaurant.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "alien-restaurant.mp3"; sourceTree = "<group>"; };
+		71AFFB4C1FE5900C00BE773C /* zap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = zap.wav; sourceTree = "<group>"; };
+		71AFFB531FE59DFE00BE773C /* GameSceneModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneModel.swift; sourceTree = "<group>"; };
+		71AFFB551FE59E2A00BE773C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		71AFFB571FE59F3900BE773C /* GameSceneSceneModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneSceneModel.swift; sourceTree = "<group>"; };
+		71AFFB591FE6E9C000BE773C /* GameSceneHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSceneHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,17 +74,64 @@
 		71AFFB311FE58DF200BE773C /* VeryOriginalPuzzleGame */ = {
 			isa = PBXGroup;
 			children = (
+				71AFFB521FE59DEB00BE773C /* SceneModel */,
+				71AFFB511FE5902B00BE773C /* Models */,
+				71AFFB501FE5901B00BE773C /* Controllers */,
+				71AFFB4F1FE5901600BE773C /* Views */,
+				71AFFB4A1FE58FE000BE773C /* Sounds */,
 				71AFFB321FE58DF200BE773C /* AppDelegate.swift */,
-				71AFFB341FE58DF200BE773C /* GameScene.sks */,
-				71AFFB361FE58DF200BE773C /* Actions.sks */,
-				71AFFB381FE58DF200BE773C /* GameScene.swift */,
-				71AFFB3A1FE58DF200BE773C /* GameViewController.swift */,
-				71AFFB3C1FE58DF200BE773C /* Main.storyboard */,
-				71AFFB3F1FE58DF200BE773C /* Assets.xcassets */,
-				71AFFB411FE58DF200BE773C /* LaunchScreen.storyboard */,
 				71AFFB441FE58DF200BE773C /* Info.plist */,
 			);
 			path = VeryOriginalPuzzleGame;
+			sourceTree = "<group>";
+		};
+		71AFFB4A1FE58FE000BE773C /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				71AFFB4B1FE5900C00BE773C /* alien-restaurant.mp3 */,
+				71AFFB4C1FE5900C00BE773C /* zap.wav */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
+		71AFFB4F1FE5901600BE773C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				71AFFB341FE58DF200BE773C /* GameScene.sks */,
+				71AFFB361FE58DF200BE773C /* Actions.sks */,
+				71AFFB3C1FE58DF200BE773C /* Main.storyboard */,
+				71AFFB411FE58DF200BE773C /* LaunchScreen.storyboard */,
+				71AFFB3F1FE58DF200BE773C /* Assets.xcassets */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		71AFFB501FE5901B00BE773C /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				71AFFB381FE58DF200BE773C /* GameScene.swift */,
+				71AFFB3A1FE58DF200BE773C /* GameViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		71AFFB511FE5902B00BE773C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				71AFFB551FE59E2A00BE773C /* Constants.swift */,
+				713C33CD1FE7615A00BAD305 /* Item.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		71AFFB521FE59DEB00BE773C /* SceneModel */ = {
+			isa = PBXGroup;
+			children = (
+				71AFFB531FE59DFE00BE773C /* GameSceneModel.swift */,
+				71AFFB571FE59F3900BE773C /* GameSceneSceneModel.swift */,
+				71AFFB591FE6E9C000BE773C /* GameSceneHelper.swift */,
+			);
+			path = SceneModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,6 +198,8 @@
 				71AFFB401FE58DF200BE773C /* Assets.xcassets in Resources */,
 				71AFFB431FE58DF200BE773C /* LaunchScreen.storyboard in Resources */,
 				71AFFB371FE58DF200BE773C /* Actions.sks in Resources */,
+				71AFFB4E1FE5900C00BE773C /* zap.wav in Resources */,
+				71AFFB4D1FE5900C00BE773C /* alien-restaurant.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,7 +210,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71AFFB561FE59E2A00BE773C /* Constants.swift in Sources */,
+				71AFFB541FE59DFE00BE773C /* GameSceneModel.swift in Sources */,
 				71AFFB391FE58DF200BE773C /* GameScene.swift in Sources */,
+				71AFFB581FE59F3900BE773C /* GameSceneSceneModel.swift in Sources */,
+				713C33CE1FE7615A00BAD305 /* Item.swift in Sources */,
+				71AFFB5A1FE6E9C000BE773C /* GameSceneHelper.swift in Sources */,
 				71AFFB3B1FE58DF200BE773C /* GameViewController.swift in Sources */,
 				71AFFB331FE58DF200BE773C /* AppDelegate.swift in Sources */,
 			);
