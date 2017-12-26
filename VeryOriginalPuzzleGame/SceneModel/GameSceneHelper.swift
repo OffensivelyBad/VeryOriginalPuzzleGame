@@ -22,10 +22,26 @@ protocol GameSceneHelper where Self: SKScene {
 
 extension GameSceneHelper {
     var itemsPerRow: Int {
-        get { return 12 }
+        get {
+            if UI_USER_INTERFACE_IDIOM() == .pad {
+                return 12
+            }
+            if UI_USER_INTERFACE_IDIOM() == .phone {
+                return 12
+            }
+            return 12
+        }
     }
     var itemsPerColumn: Int {
-        get { return 18 }
+        get {
+            if UI_USER_INTERFACE_IDIOM() == .pad {
+                return 18
+            }
+            if UI_USER_INTERFACE_IDIOM() == .phone {
+                return 8
+            }
+            return 18
+        }
     }
     var itemSize: CGFloat {
         get { return min(self.size.width / CGFloat(self.itemsPerColumn), self.size.height / CGFloat(self.itemsPerRow)) }
@@ -41,12 +57,21 @@ extension GameSceneHelper {
             let totalItemSize = self.itemSize * CGFloat(self.itemsPerColumn)
             return ((self.size.width - totalItemSize) / 2) - (self.halfWidth - self.itemSize / 2)
         }
-//        get { return -self.size.width + ((self.itemSize * CGFloat(self.itemsPerColumn)) / 2) }
     }
     var yOffset: CGFloat {
         get {
             let totalItemSize = self.itemSize * CGFloat(self.itemsPerRow)
             return ((self.size.height - totalItemSize) / 2) - (self.halfHeight - self.itemSize / 2)
+        }
+    }
+    var itemScale: CGFloat {
+        get {
+            let item = Item(imageNamed: FileNames.itemOne)
+            let width = item.size.width * CGFloat(self.itemsPerColumn)
+            let widthScale = self.size.width / width
+            let height = item.size.height * CGFloat(self.itemsPerRow)
+            let heightScale = self.size.height / height
+            return min(widthScale, heightScale)
         }
     }
     

@@ -30,5 +30,8 @@ enum FileNames {
 enum Positions {
     
     static let BackgroundZPosition: CGFloat = -2
+    static let ItemZPosition: CGFloat = 0
     
 }
+
+

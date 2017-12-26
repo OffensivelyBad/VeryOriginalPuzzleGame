@@ -91,6 +91,8 @@ extension GameScene {
             itemImage = FileNames.allItems[randomDistribution.nextInt()]
         }
         let item = Item(imageNamed: itemImage)
+        item.scale(to: CGSize(width: item.size.width * self.itemScale, height: item.size.height * self.itemScale))
+        item.zPosition = Positions.ItemZPosition
         item.name = itemImage
         item.row = row
         item.col = col
