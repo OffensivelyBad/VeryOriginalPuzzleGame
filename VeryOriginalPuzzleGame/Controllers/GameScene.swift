@@ -14,20 +14,13 @@ class GameScene: SKScene, GameSceneHelper {
     
     // Game properties
     var columns: [[Item]] = []
+    var currentMatches = Set<Item>()
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
         
         setupInitialScene()
-        createItemsForGrid()
-        
-        print(self.xOffset)
-        print(self.yOffset)
-        print(self.itemSize)
-        print(self.halfWidth)
-        print(self.halfHeight)
-        
-        
+        createItemsForGrid()       
         
     }
     
@@ -36,7 +29,11 @@ class GameScene: SKScene, GameSceneHelper {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-
+        guard let location = touches.first?.location(in: self) else { return }
+        guard let tappedItem = self.item(at: location) else { return }
+        self.currentMatches.removeAll()
+        self.match(item: tappedItem)
+        removeMatches()
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -106,6 +103,35 @@ extension GameScene {
         let x = self.xOffset + (self.itemSize * CGFloat(item.col))
         let y = self.yOffset + (self.itemSize * CGFloat(item.row))
         return CGPoint(x: x, y: y)
+    }
+    
+    private func item(at point: CGPoint) -> Item? {
+        let items = nodes(at: point).flatMap { $0 as? Item }
+        return items.first
+    }
+    
+    private func match(item original: Item) {
+        var checkItems = [Item?]()
+        self.currentMatches.insert(original)
+        let position = original.position
+        
+        checkItems.append(item(at: CGPoint(x: position.x, y: position.y - original.size.height)))
+        checkItems.append(item(at: CGPoint(x: position.x, y: position.y + original.size.height)))
+        checkItems.append(item(at: CGPoint(x: position.x - original.size.width, y: position.y)))
+        checkItems.append(item(at: CGPoint(x: position.x + original.size.width, y: position.y)))
+        
+        for case let item? in checkItems {
+            if self.currentMatches.contains(item) { continue }
+            if item.name == original.name {
+                match(item: item)
+            }
+        }
+    }
+    
+    private func removeMatches() {
+        for item in self.currentMatches {
+            item.removeFromParent()
+        }
     }
     
 }
