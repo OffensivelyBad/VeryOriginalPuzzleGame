@@ -21,6 +21,7 @@ enum FileNames {
     static let itemFive = "alien-pink"
     static let itemSix = "alien-purple"
     static let itemSeven = "alien-yellow"
+    static let itemBomb = "bomb"
     static var allItems: [String] {
         return [itemOne, itemTwo, itemThree, itemFour, itemFive, itemSix, itemSeven]
     }
@@ -31,6 +32,8 @@ enum Positions {
     
     static let BackgroundZPosition: CGFloat = -2
     static let ItemZPosition: CGFloat = 0
+    static let WhiteOverlayZPosition: CGFloat = 2
+    static let ScoreZPosition: CGFloat = 1
     
 }
 

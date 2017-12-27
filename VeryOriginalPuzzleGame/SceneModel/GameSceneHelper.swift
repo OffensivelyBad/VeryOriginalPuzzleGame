@@ -74,5 +74,12 @@ extension GameSceneHelper {
             return ((self.size.height - totalItemSize) / 2) - (self.halfHeight - self.itemSize / 2)
         }
     }
+    var scorePoint: CGPoint {
+        get {
+            let yPosition = self.halfHeight - 35
+            let xPosition = self.halfWidth - 40
+            return CGPoint(x: xPosition, y: yPosition)
+        }
+    }
     
 }

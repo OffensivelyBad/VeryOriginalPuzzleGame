@@ -20,6 +20,12 @@ class GameScene: SKScene, GameSceneHelper {
     // Game properties
     var columns: [[Item]] = []
     var currentMatches = Set<Item>()
+    let scoringLabel = SKLabelNode(fontNamed: "Noteworthy-Bold")
+    var score = 0 {
+        didSet {
+            self.scoringLabel.text = "Score: \(score)"
+        }
+    }
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -38,9 +44,15 @@ class GameScene: SKScene, GameSceneHelper {
         guard let tappedItem = self.item(at: location) else { return }
         self.isUserInteractionEnabled = false
         self.currentMatches.removeAll()
+        
+        if tappedItem.name == "bomb" {
+            triggerBomb(tappedItem)
+        }
+        
         self.match(item: tappedItem)
         removeMatches()
         moveDown()
+        adjustScore()
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -66,6 +78,11 @@ extension GameScene {
     private func setupInitialScene() {
         let background = self.sceneModel.getBackgroundSprite()
         self.addChild(background)
+        
+        self.scoringLabel.horizontalAlignmentMode = .right
+        self.scoringLabel.position = self.scorePoint
+        addChild(self.scoringLabel)
+        self.score = 0
     }
     
     private func createItemsForGrid() {
@@ -99,6 +116,10 @@ extension GameScene {
             // Get a random image
             let randomDistribution = GKRandomDistribution(lowestValue: 0, highestValue: itemCount)
             itemImage = FileNames.allItems[randomDistribution.nextInt()]
+        }
+        // Create a bomb about once in every 25 items
+        if startOffScreen && GKRandomSource.sharedRandom().nextInt(upperBound: 25) == 0 {
+            itemImage = FileNames.itemBomb
         }
         let item = Item(imageNamed: itemImage)
         item.scale(to: CGSize(width: item.size.width * self.itemScale, height: item.size.height * self.itemScale))
@@ -141,6 +162,34 @@ extension GameScene {
         }
     }
     
+    private func triggerBomb(_ bomb: Item) {
+        let flash = SKSpriteNode(color: .white, size: self.frame.size)
+        flash.zPosition = Positions.WhiteOverlayZPosition
+        addChild(flash)
+        flash.run(SKAction.fadeOut(withDuration: 0.2)) {
+            flash.removeFromParent()
+        }
+    }
+    
+    private func penalizePlayer() {
+        
+    }
+    
+    private func adjustScore() {
+        let newScore = currentMatches.count
+        
+        if newScore == 1 {
+            penalizePlayer()
+        }
+        else if newScore == 2 {
+            // no change
+        } else {
+            let matchCount = min(newScore, 16)
+            let scoreToAdd = pow(Double(matchCount), 2)
+            self.score += Int(scoreToAdd)
+        }
+    }
+    
     private func position(for item: Item) -> CGPoint {
         let x = self.xOffset + (self.itemSize * CGFloat(item.col))
         let y = self.yOffset + (self.itemSize * CGFloat(item.row))
@@ -164,7 +213,7 @@ extension GameScene {
         
         for case let item? in checkItems {
             if self.currentMatches.contains(item) { continue }
-            if item.name == original.name {
+            if item.name == original.name || original.name == FileNames.itemBomb {
                 match(item: item)
             }
         }
