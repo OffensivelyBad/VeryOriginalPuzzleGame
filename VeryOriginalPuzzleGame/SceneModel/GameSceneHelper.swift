@@ -27,7 +27,7 @@ extension GameSceneHelper {
                 return 12
             }
             if UI_USER_INTERFACE_IDIOM() == .phone {
-                return 12
+                return 8
             }
             return 12
         }
@@ -38,13 +38,23 @@ extension GameSceneHelper {
                 return 18
             }
             if UI_USER_INTERFACE_IDIOM() == .phone {
-                return 8
+                return 12
             }
             return 18
         }
     }
     var itemSize: CGFloat {
-        get { return min(self.size.width / CGFloat(self.itemsPerColumn), self.size.height / CGFloat(self.itemsPerRow)) }
+        get { return min(self.size.width / CGFloat(self.itemsPerRow), self.size.height / CGFloat(self.itemsPerColumn)) }
+    }
+    var itemScale: CGFloat {
+        get {
+            let item = Item(imageNamed: FileNames.itemOne)
+            let width = item.size.width * CGFloat(self.itemsPerRow)
+            let widthScale = self.size.width / width
+            let height = item.size.height * CGFloat(self.itemsPerColumn)
+            let heightScale = self.size.height / height
+            return min(widthScale, heightScale)
+        }
     }
     var halfWidth: CGFloat {
         get { return self.size.width / 2 }
@@ -54,24 +64,14 @@ extension GameSceneHelper {
     }
     var xOffset: CGFloat {
         get {
-            let totalItemSize = self.itemSize * CGFloat(self.itemsPerColumn)
+            let totalItemSize = self.itemSize * CGFloat(self.itemsPerRow)
             return ((self.size.width - totalItemSize) / 2) - (self.halfWidth - self.itemSize / 2)
         }
     }
     var yOffset: CGFloat {
         get {
-            let totalItemSize = self.itemSize * CGFloat(self.itemsPerRow)
+            let totalItemSize = self.itemSize * CGFloat(self.itemsPerColumn)
             return ((self.size.height - totalItemSize) / 2) - (self.halfHeight - self.itemSize / 2)
-        }
-    }
-    var itemScale: CGFloat {
-        get {
-            let item = Item(imageNamed: FileNames.itemOne)
-            let width = item.size.width * CGFloat(self.itemsPerColumn)
-            let widthScale = self.size.width / width
-            let height = item.size.height * CGFloat(self.itemsPerRow)
-            let heightScale = self.size.height / height
-            return min(widthScale, heightScale)
         }
     }
     

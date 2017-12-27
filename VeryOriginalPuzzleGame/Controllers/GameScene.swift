@@ -9,6 +9,11 @@
 import SpriteKit
 import GameplayKit
 
+/* todo:
+ animate the initial pieces in
+ animate the removed pieces out
+ */
+
 class GameScene: SKScene, GameSceneHelper {
     var sceneModel: GameSceneSceneModel!
     
@@ -31,9 +36,11 @@ class GameScene: SKScene, GameSceneHelper {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let location = touches.first?.location(in: self) else { return }
         guard let tappedItem = self.item(at: location) else { return }
+        self.isUserInteractionEnabled = false
         self.currentMatches.removeAll()
         self.match(item: tappedItem)
         removeMatches()
+        moveDown()
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -62,11 +69,17 @@ extension GameScene {
     }
     
     private func createItemsForGrid() {
+        print(self.yOffset)
+        print("total item size: \(self.itemSize * CGFloat(self.itemsPerColumn))")
+        print(self.size.height)
+        print(self.halfWidth)
+        print(self.halfWidth - self.itemSize / 2)
         for x in 0..<self.itemsPerRow {
             var col = [Item]()
             
             for y in 0..<self.itemsPerColumn {
-                let item = createItem(row: x, col: y)
+                let item = createItem(row: y, col: x)
+                addChild(item)
                 col.append(item)
             }
             self.columns.append(col)
@@ -93,10 +106,39 @@ extension GameScene {
         item.name = itemImage
         item.row = row
         item.col = col
-        item.position = position(for: item)
-        addChild(item)
+        if startOffScreen {
+            let finalPosition = position(for: item)
+            item.position = finalPosition
+            item.position.y += self.halfHeight
+            let moveAction = SKAction.move(to: finalPosition, duration: 0.3)
+            item.run(moveAction) {
+                self.isUserInteractionEnabled = true
+            }
+        }
+        else {
+            item.position = position(for: item)
+        }
         return item
         
+    }
+    
+    private func moveDown() {
+        for (columnIndex, col) in self.columns.enumerated() {
+            for (rowIndex, item) in col.enumerated() {
+                // Drop items down
+                guard item.row != rowIndex else { continue }
+                item.row = rowIndex
+                let moveAction = SKAction.move(to: position(for: item), duration: 0.1)
+                item.run(moveAction)
+            }
+            
+            // Create new items off screen
+            while self.columns[columnIndex].count < self.itemsPerColumn {
+                let item = createItem(row: self.columns[columnIndex].count, col: columnIndex, startOffScreen: true)
+                addChild(item)
+                self.columns[columnIndex].append(item)
+            }
+        }
     }
     
     private func position(for item: Item) -> CGPoint {
@@ -129,7 +171,10 @@ extension GameScene {
     }
     
     private func removeMatches() {
-        for item in self.currentMatches {
+        let sortedMatches = self.currentMatches.sorted { $0.row > $1.row }
+        
+        for item in sortedMatches {
+            self.columns[item.col].remove(at: item.row)
             item.removeFromParent()
         }
     }
