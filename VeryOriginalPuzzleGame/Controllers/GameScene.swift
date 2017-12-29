@@ -26,6 +26,15 @@ class GameScene: SKScene, GameSceneHelper {
             self.scoringLabel.text = "Score: \(score)"
         }
     }
+    let movesLabel = SKLabelNode(fontNamed: "Noteworthy-Bold")
+    var movesRemaining = 0 {
+        didSet {
+            self.movesLabel.text = "\(max(0, movesRemaining)) Moves Left"
+        }
+    }
+    let music = SKAudioNode(fileNamed: Sounds.Music)
+    var isGameOver = false
+    
     
     override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -40,39 +49,42 @@ class GameScene: SKScene, GameSceneHelper {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard !self.isGameOver else {
+            restartScene()
+            return
+        }
+        guard self.movesRemaining > 0 else { return }
         guard let location = touches.first?.location(in: self) else { return }
         guard let tappedItem = self.item(at: location) else { return }
         self.isUserInteractionEnabled = false
         self.currentMatches.removeAll()
         
         if tappedItem.name == "bomb" {
+            run(SKAction.playSoundFileNamed(Sounds.Bomb, waitForCompletion: false))
             triggerBomb(tappedItem)
+        } else {
+            run(SKAction.playSoundFileNamed(Sounds.Zap, waitForCompletion: false))
         }
         
         self.match(item: tappedItem)
         removeMatches()
+        self.movesRemaining -= 1
         moveDown()
         adjustScore()
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         
+        if self.movesRemaining <= 0 {
+            self.music.removeFromParent()
+            run(SKAction.playSoundFileNamed(Sounds.Pop, waitForCompletion: false))
+            addChild(SKAudioNode(fileNamed: Sounds.WinningMusic))
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
+                self.endGame()
+            })
+        }
     }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-    }
-    
-    override func update(_ currentTime: TimeInterval) {
 
-    }
 }
 
-// MARK: - Setup initial State
+// MARK: - Scene management
 extension GameScene {
     
     private func setupInitialScene() {
@@ -81,16 +93,20 @@ extension GameScene {
         
         self.scoringLabel.horizontalAlignmentMode = .right
         self.scoringLabel.position = self.scorePoint
+        self.scoringLabel.fontSize = 20
         addChild(self.scoringLabel)
         self.score = 0
+        
+        self.movesLabel.horizontalAlignmentMode = .left
+        self.movesLabel.position = self.movesPoint
+        self.movesLabel.fontSize = 20
+        addChild(self.movesLabel)
+        self.movesRemaining = GameRules.InitialMoves
+        
+        addChild(self.music)
     }
     
     private func createItemsForGrid() {
-        print(self.yOffset)
-        print("total item size: \(self.itemSize * CGFloat(self.itemsPerColumn))")
-        print(self.size.height)
-        print(self.halfWidth)
-        print(self.halfWidth - self.itemSize / 2)
         for x in 0..<self.itemsPerRow {
             var col = [Item]()
             
@@ -100,6 +116,44 @@ extension GameScene {
                 col.append(item)
             }
             self.columns.append(col)
+        }
+    }
+    
+    private func endGame() {
+        guard !self.isGameOver else { return }
+        self.isGameOver = true
+        let gameOver = SKSpriteNode(imageNamed: FileNames.GameOver)
+        let scaleForScreen = self.size.width / gameOver.size.width
+        gameOver.scale(to: CGSize.zero)
+        gameOver.zPosition = Positions.GameOverZPosition
+        addChild(gameOver)
+        
+        let scaleAction = SKAction.scale(to: scaleForScreen, duration: 2)
+        gameOver.run(scaleAction)
+    }
+    
+    private func restartScene() {
+        if let scene = GKScene(fileNamed: "GameScene") {
+            
+            // Get the SKScene from the loaded GKScene
+            if let sceneNode = scene.rootNode as! GameScene? {
+                
+                // Inject the properties
+                sceneNode.sceneModel = GameSceneModel()
+                
+                // Set the scale mode to scale to fit the window
+                sceneNode.scaleMode = .resizeFill
+                
+                // Present the scene
+                if let view = self.view {
+                    view.presentScene(sceneNode)
+                    
+                    view.ignoresSiblingOrder = true
+                    
+                    view.showsFPS = true
+                    view.showsNodeCount = true
+                }
+            }
         }
     }
     
@@ -172,7 +226,7 @@ extension GameScene {
     }
     
     private func penalizePlayer() {
-        
+        self.movesRemaining += GameRules.Penalty
     }
     
     private func adjustScore() {

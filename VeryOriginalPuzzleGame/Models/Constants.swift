@@ -11,7 +11,7 @@ import UIKit
 enum FileNames {
     
     static let Background = "night"
-    static let gameOver = "game-over-2"
+    static let GameOver = "game-over-2"
     
     // Game items
     static let itemOne = "alien-beige"
@@ -34,7 +34,23 @@ enum Positions {
     static let ItemZPosition: CGFloat = 0
     static let WhiteOverlayZPosition: CGFloat = 2
     static let ScoreZPosition: CGFloat = 1
+    static let GameOverZPosition: CGFloat = 10
     
 }
 
+enum GameRules {
+    
+    static let InitialMoves = 2
+    static let Penalty = -10
+    
+}
 
+enum Sounds {
+    
+    static let Music = "alien-restaurant.mp3"
+    static let WinningMusic = "winner-winner.mp3"
+    static let Pop = "pop"
+    static let Zap = "zap"
+    static let Bomb = "smart-bomb"
+    
+}

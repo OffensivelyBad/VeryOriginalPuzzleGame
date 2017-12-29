@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		713C33CE1FE7615A00BAD305 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713C33CD1FE7615A00BAD305 /* Item.swift */; };
+		716C82121FF6FFA80089494F /* smart-bomb.wav in Resources */ = {isa = PBXBuildFile; fileRef = 716C82111FF6FFA80089494F /* smart-bomb.wav */; };
+		716C82141FF7043F0089494F /* winner-winner.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 716C82131FF7043F0089494F /* winner-winner.mp3 */; };
+		716C82161FF704A10089494F /* pop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 716C82151FF704A10089494F /* pop.wav */; };
 		71AFFB331FE58DF200BE773C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AFFB321FE58DF200BE773C /* AppDelegate.swift */; };
 		71AFFB351FE58DF200BE773C /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 71AFFB341FE58DF200BE773C /* GameScene.sks */; };
 		71AFFB371FE58DF200BE773C /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 71AFFB361FE58DF200BE773C /* Actions.sks */; };
@@ -26,6 +29,9 @@
 
 /* Begin PBXFileReference section */
 		713C33CD1FE7615A00BAD305 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		716C82111FF6FFA80089494F /* smart-bomb.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "smart-bomb.wav"; path = "../../../Dive Into SpriteKit/Source Code/Assets/Project4/smart-bomb.wav"; sourceTree = "<group>"; };
+		716C82131FF7043F0089494F /* winner-winner.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "winner-winner.mp3"; path = "../../../Dive Into SpriteKit/Source Code/Assets/Project4/winner-winner.mp3"; sourceTree = "<group>"; };
+		716C82151FF704A10089494F /* pop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = pop.wav; path = "../../../Dive Into SpriteKit/Source Code/Assets/Project4/pop.wav"; sourceTree = "<group>"; };
 		71AFFB2F1FE58DF200BE773C /* VeryOriginalPuzzleGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VeryOriginalPuzzleGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71AFFB321FE58DF200BE773C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		71AFFB341FE58DF200BE773C /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -88,6 +94,9 @@
 		71AFFB4A1FE58FE000BE773C /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				716C82151FF704A10089494F /* pop.wav */,
+				716C82131FF7043F0089494F /* winner-winner.mp3 */,
+				716C82111FF6FFA80089494F /* smart-bomb.wav */,
 				71AFFB4B1FE5900C00BE773C /* alien-restaurant.mp3 */,
 				71AFFB4C1FE5900C00BE773C /* zap.wav */,
 			);
@@ -195,10 +204,13 @@
 			files = (
 				71AFFB3E1FE58DF200BE773C /* Main.storyboard in Resources */,
 				71AFFB351FE58DF200BE773C /* GameScene.sks in Resources */,
+				716C82161FF704A10089494F /* pop.wav in Resources */,
 				71AFFB401FE58DF200BE773C /* Assets.xcassets in Resources */,
+				716C82141FF7043F0089494F /* winner-winner.mp3 in Resources */,
 				71AFFB431FE58DF200BE773C /* LaunchScreen.storyboard in Resources */,
 				71AFFB371FE58DF200BE773C /* Actions.sks in Resources */,
 				71AFFB4E1FE5900C00BE773C /* zap.wav in Resources */,
+				716C82121FF6FFA80089494F /* smart-bomb.wav in Resources */,
 				71AFFB4D1FE5900C00BE773C /* alien-restaurant.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

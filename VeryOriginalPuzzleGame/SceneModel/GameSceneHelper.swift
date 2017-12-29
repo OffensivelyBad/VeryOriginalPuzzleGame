@@ -81,5 +81,12 @@ extension GameSceneHelper {
             return CGPoint(x: xPosition, y: yPosition)
         }
     }
+    var movesPoint: CGPoint {
+        get {
+            let xPosition = -self.halfWidth + 20
+            let yPosition = self.halfHeight - 35
+            return CGPoint(x: xPosition, y: yPosition)
+        }
+    }
     
 }
