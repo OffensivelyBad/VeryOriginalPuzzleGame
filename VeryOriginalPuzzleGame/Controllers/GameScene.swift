@@ -20,6 +20,7 @@ class GameScene: SKScene, GameSceneHelper {
     // Game properties
     var columns: [[Item]] = []
     var currentMatches = Set<Item>()
+    var testMatches = Set<Item>()
     let scoringLabel = SKLabelNode(fontNamed: "Noteworthy-Bold")
     var score = 0 {
         didSet {
@@ -33,6 +34,8 @@ class GameScene: SKScene, GameSceneHelper {
         }
     }
     let music = SKAudioNode(fileNamed: Sounds.Music)
+    let hintNode = SKLabelNode(fontNamed: "Noteworthy-Bold")
+    var hintsUsed = 0
     var isGameOver = false
     
     
@@ -55,7 +58,14 @@ class GameScene: SKScene, GameSceneHelper {
         }
         guard self.movesRemaining > 0 else { return }
         guard let location = touches.first?.location(in: self) else { return }
-        guard let tappedItem = self.item(at: location) else { return }
+        guard let tappedItem = self.item(at: location) else {
+            let hint = self.nodes(at: location).flatMap { $0.name == FileNames.hintName }.first
+            if hint != nil {
+                hintTapped()
+            }
+            return
+        }
+    
         self.isUserInteractionEnabled = false
         self.currentMatches.removeAll()
         
@@ -79,6 +89,10 @@ class GameScene: SKScene, GameSceneHelper {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
                 self.endGame()
             })
+        } else {
+            if self.score >= self.hintsUsed * GameRules.hintsPerScore {
+                self.hintNode.isHidden = false
+            }
         }
     }
 
@@ -104,6 +118,12 @@ extension GameScene {
         self.movesRemaining = GameRules.InitialMoves
         
         addChild(self.music)
+        
+        self.hintNode.position = self.hintPoint
+        self.hintNode.text = "Hint?"
+        self.hintNode.fontSize = 20
+        self.hintNode.zPosition = Positions.HintNodeZPosition
+        addChild(self.hintNode)
     }
     
     private func createItemsForGrid() {
@@ -279,6 +299,47 @@ extension GameScene {
         for item in sortedMatches {
             self.columns[item.col].remove(at: item.row)
             item.removeFromParent()
+        }
+    }
+    
+    private func hintTapped() {
+        
+        self.hintNode.isHidden = true
+        self.hintsUsed += 1
+        var topItem = Item()
+        var topItemCount = 0
+        
+        let items = self.children.flatMap { $0 as? Item }
+        for item in items {
+            self.testMatches.removeAll()
+            testMatch(item: item)
+            if self.testMatches.count > topItemCount {
+                topItem = item
+                topItemCount = self.testMatches.count
+            }
+        }
+        
+        let hintNode = SKSpriteNode(color: .yellow, size: topItem.size)
+        hintNode.name = FileNames.hintName
+        topItem.addChild(hintNode)
+        
+    }
+    
+    private func testMatch(item original: Item) {
+        var checkItems = [Item?]()
+        self.testMatches.insert(original)
+        let position = original.position
+        
+        checkItems.append(item(at: CGPoint(x: position.x, y: position.y - original.size.height)))
+        checkItems.append(item(at: CGPoint(x: position.x, y: position.y + original.size.height)))
+        checkItems.append(item(at: CGPoint(x: position.x - original.size.width, y: position.y)))
+        checkItems.append(item(at: CGPoint(x: position.x + original.size.width, y: position.y)))
+        
+        for case let item? in checkItems {
+            if self.testMatches.contains(item) { continue }
+            if item.name == original.name || original.name == FileNames.itemBomb {
+                testMatch(item: item)
+            }
         }
     }
     

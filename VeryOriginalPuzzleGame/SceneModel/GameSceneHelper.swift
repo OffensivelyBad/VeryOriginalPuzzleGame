@@ -88,5 +88,12 @@ extension GameSceneHelper {
             return CGPoint(x: xPosition, y: yPosition)
         }
     }
+    var hintPoint: CGPoint {
+        get {
+            let xPosition: CGFloat = 0
+            let yPosition = -self.halfHeight + 20
+            return CGPoint(x: xPosition, y: yPosition)
+        }
+    }
     
 }

@@ -25,6 +25,7 @@ enum FileNames {
     static var allItems: [String] {
         return [itemOne, itemTwo, itemThree, itemFour, itemFive, itemSix, itemSeven]
     }
+    static var hintName = "hint"
     
 }
 
@@ -35,13 +36,16 @@ enum Positions {
     static let WhiteOverlayZPosition: CGFloat = 2
     static let ScoreZPosition: CGFloat = 1
     static let GameOverZPosition: CGFloat = 10
+    static let HintNodeZPosition: CGFloat = 1
+    static let HintZPosition: CGFloat = -1
     
 }
 
 enum GameRules {
     
-    static let InitialMoves = 2
+    static let InitialMoves = 50
     static let Penalty = -10
+    static let hintsPerScore = 100
     
 }
 
